@@ -167,14 +167,14 @@ df = pd.read_csv('censusdata/acs2015_census_tract_data (1).csv')
 
 df_cleaned: DataFrame = df.dropna(subset=['Unemployment', 'Employed', 'Income', 'Professional', 'WorkAtHome', 'TotalPop'])
 
-# a) Calculate UnemploymentRate and analyze its relationship with Income
+
 df_cleaned['UnemploymentRate'] = (df_cleaned['Unemployment'] / df_cleaned['Employed']) * 100
 
-# Calculate correlation between UnemploymentRate and Income
+
 correlation_unemployment_income = df_cleaned['UnemploymentRate'].corr(df_cleaned['Income'])
 print(f"Correlation between Unemployment Rate and Income: {correlation_unemployment_income}")
 
-# Create scatter plot: Unemployment Rate vs Income
+
 plt.figure(figsize=(10, 6))
 plt.scatter(df_cleaned['UnemploymentRate'], df_cleaned['Income'], color='purple', alpha=0.5)
 plt.title('Unemployment Rate vs Income', fontsize=15)
@@ -290,30 +290,24 @@ print(transport_means)
 
 # Question 10
 
-# Load the dataset
 df = pd.read_csv("censusdata/acs2015_census_tract_data (1).csv")
 
-# Create the scatter plot
 plt.figure(figsize=(10, 6))
 sns.scatterplot(x='Poverty', y='ChildPoverty', data=df, alpha=0.5)
 plt.title('Overall Poverty vs Child Poverty')
 plt.xlabel('Overall Poverty Rate (%)')
 plt.ylabel('Child Poverty Rate (%)')
 
-# Add a diagonal line for reference
 plt.plot([0, 100], [0, 100], linestyle='--', color='red', alpha=0.5)
 
-# Save the plot
 plt.savefig('poverty_comparison.png')
 plt.close()
 
 print("Scatter plot saved as 'poverty_comparison.png'")
 
-# Calculate the correlation
 correlation = df['Poverty'].corr(df['ChildPoverty'])
 print(f"Correlation between Overall Poverty and Child Poverty: {correlation:.4f}")
 
-# Identify outliers or interesting cases
 df['Poverty_Diff'] = df['ChildPoverty'] - df['Poverty']
 interesting_cases = df[abs(df['Poverty_Diff']) > 20].sort_values('Poverty_Diff', ascending=False)
 print("\nInteresting cases (where child poverty differs significantly from overall poverty):")
